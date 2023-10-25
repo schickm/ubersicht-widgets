@@ -59,7 +59,11 @@ export const render = ({ output, error }) => {
     { key: "w", doc: "enter warp mode" }
   ];
   return (
-    <div className={keyBindingsCSS}>
+    <div
+      className={css`
+        ${keyBindingsCSS} ${stylesByMode[mode]}
+      `}
+    >
       <div
         className={css`
           ${modeCSS} ${stylesByMode[mode]}
