@@ -3,7 +3,7 @@ import { css } from "uebersicht";
 export const command = "cat $HOME/.skhd_mode && cat $HOME/.config/skhd/skhdrc";
 
 export const className = `
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
   background-color: rgba(255,255,255,0.9);
@@ -24,13 +24,18 @@ const stylesByMode = {
   `,
   resize: css`
     background-color: #98c379;
+  `,
+  toggle: css`
+    background-color: #ff9c9c;
   `
 };
 const keyBindingsCSS = css`
   display: flex;
+  align-items: center;
   justify-content: flex-start;
   gap: 12px;
-  padding: 0 10px;
+  padding: 0 20px;
+  height: 24px;
 `;
 
 const hotKeyStyle = css`
@@ -47,17 +52,20 @@ const modeCSS = css`
   width: 60px;
 `;
 
+const Spacer = () => (
+  <div
+    className={css`
+      flex-grow: 1;
+    `}
+  ></div>
+);
+
 export const render = ({ output, error }) => {
   const lines = output.split("\n");
   const mode = lines[0];
-  console.log("mode", mode);
   const allHotKeys = extractHotKeys(lines.slice(1));
-  console.log(allHotKeys);
   const hotKeys = allHotKeys.filter(({ modes }) => modes.includes(mode));
-  const keys = [
-    { key: "ctrl - space", doc: "focus" },
-    { key: "w", doc: "enter warp mode" }
-  ];
+
   return (
     <div
       className={css`
@@ -77,6 +85,16 @@ export const render = ({ output, error }) => {
           <span className={hotKeyStyle}>{hotKey}</span> {comment}
         </div>
       ))}
+
+      <Spacer />
+
+      <div>
+        {new Date().toLocaleTimeString("en-us", {
+          hour12: true,
+          hour: "numeric",
+          minute: "2-digit"
+        })}
+      </div>
     </div>
   );
 };
@@ -107,4 +125,4 @@ function matchHotKey(line) {
   return line.match(/^([a-zA-Z,\s]+)<\s?([^:;]+)/);
 }
 
-export const refreshFrequency = false;
+export const refreshFrequency = 60 * 1000;
