@@ -1,4 +1,4 @@
-#!/usr/bin/env fish
+#!/usr/bin/env sh
 
-echo $argv[1] > ~/.skhd_mode
+echo "$1" >~/.skhd_mode
 osascript -e 'tell application id "tracesOf.Uebersicht" to refresh widget id "SkhdKeys-jsx"'
