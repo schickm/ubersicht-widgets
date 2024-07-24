@@ -9,7 +9,7 @@ export const className = `
   background-color: rgba(255,255,255,0.9);
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   border-radius: 10px;
-  white-space: no-wrap;
+  white-space: nowrap;
 `;
 
 const stylesByMode = {
