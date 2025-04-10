@@ -19,6 +19,11 @@ const keyBindingsCSS = css`
   gap: 12px;
   padding: 0 20px;
   height: 24px;
+
+  /* This applies styling specific to Macbook screen with notch */
+  @media (width: 1728px) {
+      height: 32px;
+  }
 `;
 
 const hotKeyStyle = css`
