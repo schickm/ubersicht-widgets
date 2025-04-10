@@ -12,23 +12,6 @@ export const className = `
   white-space: nowrap;
 `;
 
-const stylesByMode = {
-  default: css`
-    background-color: #61afef;
-  `,
-  focus: css`
-    background-color: #32f032;
-  `,
-  swap: css`
-    background-color: #c678dd;
-  `,
-  resize: css`
-    background-color: #98c379;
-  `,
-  toggle: css`
-    background-color: #ff9c9c;
-  `
-};
 const keyBindingsCSS = css`
   display: flex;
   align-items: center;
@@ -62,19 +45,20 @@ const Spacer = () => (
 
 export const render = ({ output, error }) => {
   const lines = output.split("\n");
-  const mode = lines[0];
+  const [mode, modeColor] = lines[0].split(',');
+  const backgroundCSS = css`
+      background-color: #${modeColor};
+  `;
   const allHotKeys = extractHotKeys(lines.slice(1));
   const hotKeys = allHotKeys.filter(({ modes }) => modes.includes(mode));
 
   return (
     <div
-      className={css`
-        ${keyBindingsCSS} ${stylesByMode[mode]}
-      `}
+      className={`${backgroundCSS} ${css(keyBindingsCSS)}`}
     >
       <div
-        className={css`
-          ${modeCSS} ${stylesByMode[mode]}
+        className={`
+          ${backgroundCSS} ${css(modeCSS)}
         `}
       >
         {mode}
